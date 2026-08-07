@@ -30,7 +30,7 @@ class TrainingConfig:
     gradient_accumulation_steps: int = 8
     learning_rate: float = 2e-4
     num_train_epochs: int = 3
-    max_steps: int = -1  # -1 = ikuti num_train_epochs
+    max_steps: int = 300  # default test run singkat (M3); set -1 utk full training ikut num_train_epochs
     save_steps: int = 100
     logging_steps: int = 10
     fp16: bool = True
