@@ -55,11 +55,19 @@ Fine-tuning model bahasa pretrained gratis (HuggingFace) jadi chatbot bahasa Ind
 - Data lokal yang sudah ada di `llm-iqmal/datasets/alodokter-OTC-drugs_scrapping.json` (domain obat, format instruction/input/output) — bisa dipakai sebagai contoh domain-specific fine-tuning
 
 **Deliverables:**
-- [ ] `scripts/download_dataset.py` — download salah satu/gabungan dataset di atas
-- [ ] `scripts/prepare_dataset.py` — format ke template chat base model (system/user/assistant atau instruction/response, sesuai model M1), split train/val
-- [ ] Statistik dataset: jumlah pasangan instruksi, rata-rata panjang
+- [x] `scripts/download_dataset.py` — download salah satu/gabungan dataset di atas
+- [x] `scripts/prepare_dataset.py` — format ke template chat base model (system/user/assistant atau instruction/response, sesuai model M1), split train/val
+- [x] Statistik dataset: jumlah pasangan instruksi, rata-rata panjang
 
-**Done when:** `data/processed/train.jsonl` & `val.jsonl` tersedia, tervalidasi format-nya cocok dengan chat template base model.
+**Dataset dipakai:** `cahya/alpaca-id-cleaned` (51.590 baris, kolom `instruction`/`input`/`output`) — dipilih karena satu "keluarga" dengan base model M1 (`cahya/*`), format Alpaca standar, cukup besar untuk LoRA fine-tune.
+
+**Template:** GPT2 base tidak punya chat template bawaan, jadi dipakai template Alpaca klasik (`### Instruksi:` / `### Input:` opsional / `### Jawaban:`), ditutup token `<|endoftext|>` supaya model belajar kapan berhenti generate.
+
+**Statistik:**
+- Total pasangan: 51.590 → train 49.011 / val 2.579 (95/5, seed 42)
+- Rata-rata panjang: 167 token; maksimum 1.343 token (beberapa contoh lebih panjang dari `max_seq_length=512` di `config.py` — akan di-truncate saat training)
+
+**Done when:** `data/processed/train.jsonl` & `val.jsonl` tersedia, tervalidasi format-nya cocok dengan chat template base model. ✅
 
 ---
 
