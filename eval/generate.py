@@ -37,6 +37,8 @@ def generate(tokenizer, model, prompt: str, max_new_tokens: int, device: str) ->
             do_sample=True,
             top_p=0.9,
             temperature=0.8,
+            repetition_penalty=1.3,
+            no_repeat_ngram_size=3,
             pad_token_id=tokenizer.eos_token_id,
         )
     return tokenizer.decode(output[0], skip_special_tokens=True)
