@@ -9,10 +9,10 @@ Fine-tuning model bahasa pretrained gratis (HuggingFace) jadi chatbot bahasa Ind
 **Goal:** Project siap dikerjakan, dependency terinstall, struktur folder bersih.
 
 **Deliverables:**
-- [ ] `.venv` terbuat dengan `py -3 -m uv venv .venv`
-- [ ] `requirements.txt`: `torch` (CUDA build, samakan tag `cuXXX` dengan driver — cek `nvidia-smi`), `transformers`, `peft`, `accelerate`, `datasets`, `sentencepiece`
-- [ ] `config.py` dengan hyperparameter fine-tuning default
-- [ ] Folder struktur sesuai `CLAUDE.md`
+- [x] `.venv` terbuat dengan `py -3 -m uv venv .venv`
+- [x] `requirements.txt`: `torch` (CUDA build, samakan tag `cuXXX` dengan driver — cek `nvidia-smi`), `transformers`, `peft`, `accelerate`, `datasets`, `sentencepiece`
+- [x] `config.py` dengan hyperparameter fine-tuning default
+- [x] Folder struktur sesuai `CLAUDE.md`
 
 **Done when:** `python -c "import torch, transformers, peft; print(torch.cuda.is_available())"` return `True` tanpa error.
 
@@ -28,11 +28,18 @@ Fine-tuning model bahasa pretrained gratis (HuggingFace) jadi chatbot bahasa Ind
 - Model multilingual instruct kecil (mis. keluarga Qwen/Gemma ukuran kecil) kalau butuh kualitas instruksi lebih baik — cek dulu ukurannya realistis untuk 6GB + LoRA
 
 **Deliverables:**
-- [ ] Script/notebook kecil: load base model + tokenizer, coba generate teks Indonesia biasa (belum fine-tune) sebagai baseline
-- [ ] Catat jumlah parameter, ukuran file, & kebutuhan VRAM saat load (fp16)
-- [ ] Putuskan base model final, dokumentasikan alasan pemilihan di sini
+- [x] Script/notebook kecil: load base model + tokenizer, coba generate teks Indonesia biasa (belum fine-tune) sebagai baseline — `eval/generate.py`
+- [x] Catat jumlah parameter, ukuran file, & kebutuhan VRAM saat load (fp16)
+- [x] Putuskan base model final, dokumentasikan alasan pemilihan di sini
 
-**Done when:** Base model ke-load di GPU, generate teks Indonesia yang grammatically masuk akal (baseline sebelum fine-tune).
+**Catatan hasil baseline (`cahya/gpt2-small-indonesian-522M`):**
+- Params: 124,439,808 (~124M — "522M" di nama repo adalah ukuran korpus training, bukan jumlah parameter)
+- Bobot di HF hub: `pytorch_model.bin` ~510MB (fp32); di-load sebagai fp16 → VRAM saat load jauh di bawah 1GB, sangat aman untuk GPU 6GB + ruang LoRA fine-tune nanti
+- Load sukses di GPU (`cuda`), generate teks Indonesia yang gramatikal & koheren pada baseline (belum fine-tune)
+
+**Keputusan:** `cahya/gpt2-small-indonesian-522M` dipakai sebagai base model final untuk Milestone 2+. Alasan: arsitektur GPT2-small standar (kompatibel LoRA lewat target module `c_attn`), ukuran kecil jadi ruang VRAM besar tersisa untuk batch/LoRA di 6GB, dan sudah pretrained korpus Indonesia sehingga baseline generate sudah koheren tanpa fine-tune.
+
+**Done when:** Base model ke-load di GPU, generate teks Indonesia yang grammatically masuk akal (baseline sebelum fine-tune). ✅
 
 ---
 
