@@ -1,0 +1,32 @@
+# Virtualenv
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Dataset & model artifacts (besar, tidak masuk git)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+adapters/*
+!adapters/.gitkeep
+
+# Checkpoint & log training
+checkpoints/
+runs/
+logs/
+wandb/
+
+# HuggingFace cache lokal (kalau diarahkan ke project)
+.cache/
+
+# Editor & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Env vars / secrets
+.env

@@ -1,0 +1,11 @@
+# PyTorch CUDA build — samakan tag cuXXX dengan driver (cek `nvidia-smi`).
+# Driver saat ini support up to CUDA 13.3. cu124 belum ada wheel utk Python 3.14 (cp314),
+# jadi pakai cu126 (versi 2.13.0 tersedia utk cp314, dan CUDA 12.6 kompatibel dgn driver ini).
+--extra-index-url https://download.pytorch.org/whl/cu126
+torch==2.13.0+cu126
+
+transformers
+peft
+accelerate
+datasets
+sentencepiece
